@@ -4,20 +4,10 @@ import Button from "@mui/material/Button";
 import { useRouter } from "next/navigation";
 const setPasswordForm = {
   heading: "SET PASSWORD",
-  description: [
-    "Password Requirements:",
-    "- Your password must have a minimum of 8 characters",
-    <br />,
-    "- Maximum of 16 and containing at least 3 of the following:",
-    <br />,
-    "- Must include Lowercase characters",
-    <br />,
-    "- Must include Uppercase characters",
-    <br />,
-    "- Must include Numbers (0-9)",
-    <br />,
-    "- Must include Symbols",
-  ],
+  description: `Password Requirements:- Your password must have a minimum of 8 characters 
+  containing at least 3 of the following: - Must include Lowercase characters.
+   - Must include Uppercase characters. - Must include Numbers (0-9).
+    - Must include Symbols`,
   inputs: {
     password: {
       name: "Password",
