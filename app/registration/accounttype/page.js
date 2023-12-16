@@ -40,7 +40,9 @@ export default function AddressForm() {
         justifyContent: "center",
       }}
     >
-      {cardForm.map((card) => (<CardSelect heading={card.heading} description={card.description}/>))}
+      {cardForm.map((card, index) => (<div key={index}>
+          <CardSelect heading={card.heading} description={card.description}/>
+      </div>))}
     </div>
   );
 }
