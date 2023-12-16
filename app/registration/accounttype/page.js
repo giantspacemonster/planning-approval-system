@@ -2,7 +2,6 @@
 import CardSelect from "@/components/CardSelect/CardSelect";
 import Form from "@/components/Form/Form";
 import Button from "@mui/material/Button";
-import { useRouter } from "next/navigation";
 const cardForm = [
   {
     heading: "Citizen",
@@ -31,7 +30,6 @@ const cardForm = [
 ];
 
 export default function AddressForm() {
-  const router = useRouter();
   return (
     <div
       style={{

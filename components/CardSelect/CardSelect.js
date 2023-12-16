@@ -1,3 +1,4 @@
+import { useRouter } from "next/navigation";
 import {
   Button,
   Card,
@@ -8,6 +9,7 @@ import {
 } from "@mui/material";
 
 export default function CardSelect({ heading, description }) {
+  const router = useRouter();
   return (
     <Card
       sx={{
