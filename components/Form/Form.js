@@ -2,6 +2,7 @@ import { Button, MenuItem, Select } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import { Inter } from "next/font/google";
 import toast from "react-hot-toast";
+import styles from "./Form.module.css";
 import TextInput from "../TextInput/TextInput";
 import NumericInput from "../NumericInput/NumericInput";
 const inter = Inter({ subsets: ["latin"] });
@@ -208,16 +209,7 @@ export default function Form({
     }
   };
   return (
-    <div
-      className="container"
-      style={{
-        borderBottom: "1px solid var(--xiketic-black)",
-        padding: "20px",
-        margin: "3em",
-        display: "grid",
-        gridTemplateColumns: "45% 5% 45%",
-      }}
-    >
+    <div className={styles.formContainer}>
       <div
         className={inter.className}
         style={{
@@ -281,10 +273,9 @@ export default function Form({
                   label={inputs[key].name}
                   sx={{ width: "100%" }}
                 >
-                  <MenuItem value="">Select Gender</MenuItem>
-                  <MenuItem value="MALE">Male</MenuItem>
-                  <MenuItem value="FEMALE">Female</MenuItem>
-                  <MenuItem value="OTHERS">Others</MenuItem>
+                  <MenuItem value="Male">Male</MenuItem>
+                  <MenuItem value="Female">Female</MenuItem>
+                  <MenuItem value="Others">Others</MenuItem>
                 </Select>
               </div>
             ) : null}
@@ -307,7 +298,7 @@ export default function Form({
             Object.keys(inputs).map((key) => {
               const element = document.getElementById(key);
               console.log(element.value == "");
-              if ((element.value == "")) {
+              if (element.value == "") {
                 toast(`Empty value at ${key} field.`);
                 isFilled.push(false);
               } else {

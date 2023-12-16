@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <Toaster position="top-right"/>
-        <Navigation />
+        <Navigation/>
         <div
         style={{
           marginTop: '4em',

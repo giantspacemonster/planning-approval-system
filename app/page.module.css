@@ -1,0 +1,101 @@
+.mainContianer {
+  display: flex;
+  flex-direction: column;
+}
+
+.gridItem {
+  width: 100%;
+  height: auto;
+}
+.floatingText {
+  position: absolute;
+  top: 5.5em;
+  left: 1em;
+  width: 45%;
+  background-color: var(--overlay-shadow);
+}
+.floatingTextHeading {
+  font-size: 3.5em;
+  font-weight: bolder;
+  color: var(--white-smoke);
+}
+.floatingTextDesc {
+  font-size: 2em;
+  font-weight: lighter;
+  color: var(--white-smoke);
+}
+.contentGrid1 {
+  display: grid;
+  grid-template-columns: 70% 30%;
+  margin: 1em;
+}
+.contentGrid2 {
+  display: grid;
+  grid-template-columns: 30% 70%;
+  margin: 1em;
+}
+.contentGridHeading {
+  padding: 1em;
+  text-align: justify;
+  height: auto;
+}
+.contentGridHeading h2 {
+  font-size: 3.6em;
+  font-family: "Russo One", sans-serif;
+}
+.contentGridDesc {
+  font-size: 2em;
+  font-weight: lighter;
+  text-align: justify;
+}
+
+/* iPhone Portrait */
+@media screen and (max-device-width: 480px) and (orientation: portrait) {
+  .floatingText {
+    top: 10.45em;
+    left: 0;
+    width: 93.5%;
+    padding: 12px;
+  }
+  .floatingTextHeading {
+    font-size: 1em;
+  }
+  .floatingTextDesc {
+    font-size: 1em;
+  }
+  .bgImage {
+    width: 100%;
+  }
+  .contentGrid1 {
+    display: block;
+    margin-top: 10.45em;
+  }
+  .contentGrid2 {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .contentGridHeading {
+    text-align: center;
+    font-size: 0.4em;
+  }
+}
+
+/* iPad Portrait */
+@media screen and (min-device-width: 481px) and (orientation: portrait) {
+  .floatingText {
+    width: 95.5%;
+  }
+  .floatingTextHeading{
+    font-size: 2em;
+  }
+  .floatingTextDesc {
+    font-size: 1em;
+  }
+  .contentGrid1, .contentGrid2 {
+    display: flex;
+    flex-direction: column;
+  }
+  .contentGridHeading {
+    font-size: 0.5em;
+  }
+}

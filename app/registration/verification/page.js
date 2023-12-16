@@ -1,6 +1,6 @@
 "use client";
 import Form from "@/components/Form/Form";
-import Button from "@mui/material/Button";
+import styles from "./verification.module.css";
 import { useRouter } from "next/navigation";
 const verificationForm = {
   heading: "VERIFICATION",
@@ -28,11 +28,7 @@ export default function VerificationForm() {
   const router = useRouter();
   return (
     <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-      }}
+      className={styles.verificationForm}
     >
       <Form
         formHeading={verificationForm.heading}

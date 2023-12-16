@@ -6,22 +6,40 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import styles from "./registration.module.css";
+import { useEffect, useState } from "react";
 export default function Register() {
   const router = useRouter();
+  const [mobileScreenDetect, setMobileScreenDetect] = useState(false);
+  const [tabletScreenDetect, setTabletScreenDetect] = useState(false);
+  useEffect(() => {
+    if (window.visualViewport.width < 587) {
+      setMobileScreenDetect(true);
+    }
+    if (window.visualViewport.width < 1025) {
+      setTabletScreenDetect(true);
+    }
+  }, []);
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-      }}
-    >
+    <div className={styles.mainContainer}>
       <Card
         sx={{
-          maxWidth: "50%",
-          marginLeft: "25%",
-          marginRight: "25%",
-          marginTop: "1em",
+          maxWidth: tabletScreenDetect
+            ? mobileScreenDetect
+              ? "94%"
+              : "100%"
+            : "100%",
+          marginLeft: tabletScreenDetect
+            ? mobileScreenDetect
+              ? "0"
+              : "2%"
+            : "25%",
+          marginRight: tabletScreenDetect
+            ? mobileScreenDetect
+              ? "0"
+              : "2%"
+            : "25%",
+          marginTop: mobileScreenDetect ? "0" : "1em",
         }}
       >
         <CardMedia
@@ -37,8 +55,12 @@ export default function Register() {
             sx={{
               position: "absolute",
               top: "4em",
-              width: "50%",
-              fontSize: "3em",
+              width: tabletScreenDetect
+                ? mobileScreenDetect
+                  ? "90%"
+                  : "95%"
+                : "50%",
+              fontSize: mobileScreenDetect ? "2em" : "3em",
               fontWeight: "bolder",
               color: "var(--xiketic-black)",
             }}

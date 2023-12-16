@@ -1,0 +1,14 @@
+.formContainer {
+    border-bottom: 1px solid var(--xiketic-black);
+    padding: 20px;
+    margin: 3em;
+    display: grid;
+    grid-template-columns: 45% 5% 45%;
+}
+@media screen and (max-device-width: 480px) and (orientation:portrait) {
+    .formContainer {
+        display: block;
+        margin: 1em;
+        padding: 0;
+    }
+}

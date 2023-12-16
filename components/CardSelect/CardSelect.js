@@ -7,15 +7,26 @@ import {
   CardMedia,
   Typography,
 } from "@mui/material";
+import { useEffect, useState } from "react";
 
 export default function CardSelect({ heading, description }) {
   const router = useRouter();
+  const [mobileScreenDetect, setMobileScreenDetect] = useState(false);
+  const [tabletScreenDetect, setTabletScreenDetect] = useState(false);
+  useEffect(() => {
+    if (window.visualViewport.width < 587) {
+      setMobileScreenDetect(true);
+    }
+    if (window.visualViewport.width < 1025) {
+      setTabletScreenDetect(true);
+    }
+  }, []);
   return (
     <Card
       sx={{
-        maxWidth: "50%",
-        marginLeft: "25%",
-        marginRight: "25%",
+        maxWidth: mobileScreenDetect ? "100%" : "50%",
+        marginLeft: mobileScreenDetect ? "4px": "25%",
+        marginRight: mobileScreenDetect ? "4px" : "25%",
         marginTop: "1em",
       }}
     >
@@ -53,8 +64,6 @@ export default function CardSelect({ heading, description }) {
             },
           }}
           onClick={(e) => {
-            const element = document.getElementById("email");
-            console.log(element);
             router.push("/login");
           }}
         >

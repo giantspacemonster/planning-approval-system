@@ -2,24 +2,16 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import buildingImage from "../public/building.jpg";
 import sampleImage from "/public/sampleImage.jpg";
+import sampleImage2 from "/public/sampleImage2.jpg";
 import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      <div
-        style={{
-          width: "100%",
-          height: "auto",
-        }}
-      >
+    <div className={styles.mainContainer}>
+      <div className={styles.gridItem}>
         <Image
+          className={styles.bgImage}
           src={buildingImage}
           alt="background"
           width={0}
@@ -30,35 +22,13 @@ export default function Home() {
             height: "auto",
           }}
         />
-        <div
-          style={{
-            position: "absolute",
-            top: "5.5em",
-            left: "1em",
-            width: "45%",
-            background: "var(--overlay-shadow)",
-          }}
-        >
-          <p
-            style={{
-              fontSize: "3em",
-              fontWeight: "bolder",
-              color: "var(--white-smoke)",
-            }}
-            className={inter.className}
-          >
+        <div className={styles.floatingText}>
+          <p className={`${inter.className} ${styles.floatingTextHeading}`}>
             <b>STREAMLINED CONSTRUCTION AND PLANNING APPROVAL</b>
           </p>
           <br />
           <br />
-          <p
-            style={{
-              fontSize: "2em",
-              fontWeight: "bolder",
-              color: "var(--white-smoke)",
-            }}
-            className={inter.className}
-          >
+          <p className={`${inter.className} ${styles.floatingTextDesc}`}>
             Submit applications, track progress, and access vital
             information—all in one place.
             <br />
@@ -67,35 +37,10 @@ export default function Home() {
           </p>
         </div>
       </div>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "70% 30%",
-          margin: "1em",
-        }}
-      >
-        <div
-          style={{
-            padding: "1em",
-            textAlign: "justify",
-            height: "auto",
-          }}
-        >
-          <h2
-            style={{
-              fontFamily: "'Russo One', sans-serif",
-              fontSize: "4em",
-            }}
-          >
-            Comprehensive Information Hub
-          </h2>
-          <br />
-          <br />
-          <p
-            style={{
-              fontSize: "2em",
-            }}
-          >
+      <div className={styles.contentGrid1}>
+        <div className={styles.contentGridHeading}>
+          <h2>Comprehensive Information Hub</h2>
+          <p className={styles.contentGridDesc}>
             Navigate through a wealth of information right at your fingertips.
             Our website serves as a comprehensive hub for zoning regulations,
             building codes, and planning guidelines. Citizens, architects, and
@@ -105,7 +50,7 @@ export default function Home() {
           </p>
         </div>
         <Image
-          src={sampleImage}
+          src={sampleImage2}
           alt="sample"
           width={0}
           height={0}
@@ -117,14 +62,7 @@ export default function Home() {
           }}
         />
       </div>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "30% 70%",
-          margin: "1em",
-          borderRadius: "4px",
-        }}
-      >
+      <div className={styles.contentGrid2}>
         <Image
           src={sampleImage}
           alt="sample"
@@ -137,28 +75,9 @@ export default function Home() {
             borderRadius: "4px",
           }}
         />
-        <div
-          style={{
-            padding: "1em",
-            textAlign: "justify",
-            height: "auto",
-          }}
-        >
-          <h2
-            style={{
-              fontFamily: "'Russo One', sans-serif",
-              fontSize: "4em",
-            }}
-          >
-            Intuitive Application Submission
-          </h2>
-          <br />
-          <br />
-          <p
-            style={{
-              fontSize: "2em",
-            }}
-          >
+        <div className={styles.contentGridHeading}>
+          <h2>Intuitive Application Submission</h2>
+          <p className={styles.contentGridDesc}>
             For citizens and architects alike, the process of submitting
             applications has been revolutionized. Our intuitive online forms
             guide users through each step, ensuring that all necessary details
@@ -168,9 +87,7 @@ export default function Home() {
           </p>
         </div>
       </div>
-      <div>
-        
-      </div>
+      <div></div>
     </div>
   );
 }

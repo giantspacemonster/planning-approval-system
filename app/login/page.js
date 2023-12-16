@@ -6,47 +6,42 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import Form from "@/components/Form/Form";
+import styles from "./login.module.css";
 import TextInput from "@/components/TextInput/TextInput";
+import { useEffect, useState } from "react";
 
-const loginForm = {
-  heading: "Login",
-  description: `Let's log you into our system, please provide 
-    your email, or phone number and password`,
-  inputs: {
-    email: {
-      name: "Email Address",
-      placeholder: "Enter Email Address",
-      type: "text",
-    },
-    phone: {
-      name: "Phone Number",
-      placeholder: "Enter Phone Number",
-      type: "number",
-    },
-    password: {
-      name: "Password",
-      placeholder: "Enter your Password",
-      type: "password",
-    },
-  },
-};
 export default function Login() {
   const router = useRouter();
+  const [mobileScreenDetect, setMobileScreenDetect] = useState(false);
+  const [tabletScreenDetect, setTabletScreenDetect] = useState(false);
+  useEffect(() => {
+    if (window.visualViewport.width < 587) {
+      setMobileScreenDetect(true);
+    }
+    if (window.visualViewport.width < 1025) {
+      setTabletScreenDetect(true);
+    }
+  }, []);
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-      }}
-    >
+    <div className={styles.mainContainer}>
       <Card
         sx={{
-          maxWidth: "50%",
-          marginLeft: "25%",
-          marginRight: "25%",
-          marginTop: "1em",
+          maxWidth: tabletScreenDetect
+            ? mobileScreenDetect
+              ? "94%"
+              : "100%"
+            : "100%",
+          marginLeft: tabletScreenDetect
+            ? mobileScreenDetect
+              ? "0"
+              : "2%"
+            : "25%",
+          marginRight: tabletScreenDetect
+            ? mobileScreenDetect
+              ? "0"
+              : "2%"
+            : "25%",
+          marginTop: mobileScreenDetect ? "0" : "1em",
         }}
       >
         <CardMedia
@@ -62,8 +57,12 @@ export default function Login() {
             sx={{
               position: "absolute",
               top: "4em",
-              width: "50%",
-              fontSize: "3em",
+              width: tabletScreenDetect
+                ? mobileScreenDetect
+                  ? "90%"
+                  : "95%"
+                : "50%",
+              fontSize: mobileScreenDetect ? "2em" : "3em",
               fontWeight: "bolder",
               color: "var(--xiketic-black)",
             }}

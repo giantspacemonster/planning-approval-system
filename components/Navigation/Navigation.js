@@ -1,3 +1,4 @@
+'use client'
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -6,20 +7,37 @@ import IconButton from "@mui/material/IconButton";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import { Tooltip } from "@mui/material";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
-export default function ButtonAppBar() {
+export default function Navigation() {
+  const [mobileScreenDetect, setMobileScreenDetect] = useState(false);
+  const [tabletScreenDetect, setTabletScreenDetect] = useState(false);
+  useEffect(() => {
+    if (window.visualViewport.width < 587) {
+      setMobileScreenDetect(true)
+    }
+    if (window.visualViewport.width < 1025) {
+      setTabletScreenDetect(true);
+    }
+  }, []);
   return (
     <AppBar
       position="fixed"
       style={{
         background: "var(--fresh-green)",
+        width: "100vw",
+        left: 0,
       }}
     >
       <Toolbar>
-        <Link href='/' style={{
-          color: '#FFF',
-          textDecoration: 'none'
-        }}>
+        <Link
+          href="/"
+          style={{
+            color: "#FFF",
+            textDecoration: "none",
+            paddingLeft: "12px",
+          }}
+        >
           <Tooltip title="Home">
             <IconButton
               size="large"
@@ -32,7 +50,9 @@ export default function ButtonAppBar() {
           </Tooltip>
         </Link>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Online Building and Planning Approval System
+          {mobileScreenDetect
+            ? "OBPAS "
+            : "Online Building and Planning Approval System"}
         </Typography>
         <Link
           href="login"
