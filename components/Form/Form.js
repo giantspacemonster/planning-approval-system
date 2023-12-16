@@ -1,8 +1,6 @@
-import { MenuItem, Select } from "@mui/material";
+import { Button, MenuItem, Select } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
-import TextField from "@mui/material/TextField";
 import { Inter } from "next/font/google";
-import { useState } from "react";
 import toast from "react-hot-toast";
 import TextInput from "../TextInput/TextInput";
 import NumericInput from "../NumericInput/NumericInput";
@@ -12,10 +10,14 @@ export default function Form({
   formDescription,
   inputs = [],
   required,
+  handleSubmit,
 }) {
+  const areInputsValid = {};
   const handleInputValidation = (e) => {
     const element = e.target;
     const id = element.id;
+    areInputsValid[id] = false;
+
     switch (id) {
       case "email":
         // Regular expression to validate the email address
@@ -26,6 +28,7 @@ export default function Form({
           toast.error("That does not look like a valid email address", {
             id: id,
           });
+          areInputsValid[id] = false;
           element.style.borderBottom = "2px solid var(--fiery-rose)";
           element.style.borderRadius = "4px";
         } else {
@@ -33,6 +36,7 @@ export default function Form({
           toast.success("That is a good looking email right there!", {
             id: id,
           });
+          areInputsValid[id] = true;
           element.style.borderBottom = "2px solid var(--pine-green)";
           element.style.borderRadius = "4px";
         }
@@ -48,11 +52,13 @@ export default function Form({
           toast.error("That does not look like a valid phone number", {
             id: id,
           });
+          areInputsValid[id] = false;
         } else {
           toast.dismiss();
           toast.success("That is a good looking phone number right there!", {
             id: id,
           });
+          areInputsValid[id] = true;
           element.style.borderBottom = "2px solid var(--pine-green)";
           element.style.borderRadius = "4px";
         }
@@ -75,6 +81,7 @@ export default function Form({
           toast.error("Password should have at least 8 characters.", {
             id: id,
           });
+          areInputsValid[id] = false;
           element.style.borderBottom = "2px solid var(--fiery-rose)";
           element.style.borderRadius = "4px";
         } else {
@@ -101,6 +108,7 @@ export default function Form({
               `The password is strong enough, you can move along now!`,
               { id: id }
             );
+            areInputsValid[id] = true;
           }
           if (flag < 3) {
             element.style.borderBottom = "2px solid var(--fiery-rose)";
@@ -110,6 +118,7 @@ export default function Form({
               "Password should have at least one uppercase letter, one lowercase letter, and one numeric character.",
               { id: id }
             );
+            areInputsValid[id] = false;
           }
         }
         break;
@@ -118,10 +127,12 @@ export default function Form({
         if (element.value == password.value) {
           toast.dismiss();
           toast.success("Passwords match!");
+          areInputsValid[id] = true;
           element.style.borderBottom = "2px solid var(--pine-green)";
           element.style.borderRadius = "4px";
         } else {
           toast.dismiss();
+          areInputsValid[id] = false;
           toast.error("Passwords do not match!", { id: id });
           element.style.borderBottom = "2px solid var(--fiery-rose)";
           element.style.borderRadius = "4px";
@@ -133,11 +144,13 @@ export default function Form({
         if (!nameRegex.test(element.value)) {
           toast.dismiss();
           toast.error(`Is that really your name?`, { id: id });
+          areInputsValid[id] = false;
           element.style.borderBottom = "2px solid var(--fiery-rose)";
           element.style.borderRadius = "4px";
         } else {
           toast.dismiss();
           toast.success(`Username checks out`, { id: id });
+          areInputsValid[id] = true;
           element.style.borderBottom = "2px solid var(--pine-green)";
           element.style.borderRadius = "4px";
         }
@@ -147,11 +160,13 @@ export default function Form({
         if (!ageRegex.test(element.value)) {
           toast.dismiss();
           toast.error("That doesn't look like a valid age.", { id: id });
+          areInputsValid[id] = false;
           element.style.borderBottom = "2px solid var(--fiery-rose)";
           element.style.borderRadius = "4px";
         } else {
           toast.dismiss();
           toast.success("Age Validated", { id: id });
+          areInputsValid[id] = true;
           element.style.borderBottom = "2px solid var(--pine-green)";
           element.style.borderRadius = "4px";
         }
@@ -164,11 +179,13 @@ export default function Form({
         if (!cityRegex.test(element.value)) {
           toast.dismiss();
           toast.error("Looks invalid!", { id: id });
+          areInputsValid[id] = false;
           element.style.borderBottom = "2px solid var(--fiery-rose)";
           element.style.borderRadius = "4px";
         } else {
           toast.dismiss();
           toast.success("Looks valid!", { id: id });
+          areInputsValid[id] = true;
           element.style.borderBottom = "2px solid var(--pine-green)";
           element.style.borderRadius = "4px";
         }
@@ -178,11 +195,13 @@ export default function Form({
         if (!pincodeRegex.test(element.value)) {
           toast.dismiss();
           toast.error("Please enter a valid postal code", { id: id });
+          areInputsValid[id] = false;
           element.style.borderBottom = "2px solid var(--fiery-rose)";
           element.style.borderRadius = "4px";
         } else {
           toast.dismiss();
           toast.success("Postal code looks good!", { id: id });
+          areInputsValid[id] = true;
           element.style.borderBottom = "2px solid var(--pine-green)";
           element.style.borderRadius = "4px";
         }
@@ -271,6 +290,51 @@ export default function Form({
             ) : null}
           </div>
         ))}
+        <br />
+        <Button
+          variant="contained"
+          id="submit-button"
+          sx={{
+            width: "50%",
+            marginTop: "3em",
+            marginLeft: "25%",
+            marginRight: "25%",
+            marginBottom: "3em",
+            background: "var(--fresh-green)",
+          }}
+          onClick={(e) => {
+            let isFilled = [];
+            Object.keys(inputs).map((key) => {
+              const element = document.getElementById(key);
+              console.log(element.value == "");
+              if ((element.value == "")) {
+                toast(`Empty value at ${key} field.`);
+                isFilled.push(false);
+              } else {
+                isFilled.push(true);
+              }
+            });
+            console.log("checking isFilled: ", isFilled);
+
+            if (isFilled.includes(false)) {
+              e.preventDefault();
+            } else {
+              Object.keys(areInputsValid).map((key) => {
+                if (!areInputsValid[key]) {
+                  toast(
+                    `The ${key} field is invalid. Please recheck your submission!`
+                  );
+                  e.preventDefault();
+                }
+              });
+              if (!Object.values(areInputsValid).includes(false)) {
+                handleSubmit(e);
+              }
+            }
+          }}
+        >
+          Submit
+        </Button>
       </div>
     </div>
   );

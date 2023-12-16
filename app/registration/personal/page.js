@@ -35,6 +35,9 @@ const personalForm = {
 
 export default function PersonalForm() {
   const router = useRouter();
+  const handleSubmit = (e) => {
+    router.push("/registration/address");
+  };
   return (
     <div
       style={{
@@ -47,24 +50,8 @@ export default function PersonalForm() {
         formHeading={personalForm.heading}
         formDescription={personalForm.description}
         inputs={personalForm.inputs}
+        handleSubmit={handleSubmit}
       />
-
-      <Button
-        variant="contained"
-        sx={{
-          width: "auto",
-          marginLeft: "38%",
-          marginRight: "42%",
-          marginBottom: "3em",
-        }}
-        onClick={(e) => {
-          const element = document.getElementById("email");
-          console.log(element);
-          router.push("/registration/address");
-        }}
-      >
-        Submit
-      </Button>
     </div>
   );
 }

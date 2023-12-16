@@ -23,6 +23,9 @@ const setPasswordForm = {
 };
 export default function PasswordForm() {
   const router = useRouter();
+  const handleSubmit = (e) => {
+    router.push("/registration/personal");
+  };
   return (
     <div
       style={{
@@ -35,24 +38,8 @@ export default function PasswordForm() {
         formHeading={setPasswordForm.heading}
         formDescription={setPasswordForm.description}
         inputs={setPasswordForm.inputs}
+        handleSubmit={handleSubmit}
       />
-
-      <Button
-        variant="contained"
-        sx={{
-          width: "auto",
-          marginLeft: "38%",
-          marginRight: "42%",
-          marginBottom: "3em",
-        }}
-        onClick={(e) => {
-          const element = document.getElementById("email");
-          console.log(element);
-          router.push("/registration/personal");
-        }}
-      >
-        Submit
-      </Button>
     </div>
   );
 }

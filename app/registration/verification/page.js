@@ -22,6 +22,9 @@ const verificationForm = {
   },
 };
 export default function VerificationForm() {
+  const handleSubmit = (e) => {
+    router.push("/registration/password");
+  };
   const router = useRouter();
   return (
     <div
@@ -35,24 +38,9 @@ export default function VerificationForm() {
         formHeading={verificationForm.heading}
         formDescription={verificationForm.description}
         inputs={verificationForm.inputs}
+        required={true}
+        handleSubmit={handleSubmit}
       />
-
-      <Button
-        variant="contained"
-        sx={{
-          width: "auto",
-          marginLeft: "38%",
-          marginRight: "42%",
-          marginBottom: "3em",
-        }}
-        onClick={(e) => {
-          const element = document.getElementById("email");
-          console.log(element);
-          router.push("/registration/password");
-        }}
-      >
-        Submit
-      </Button>
     </div>
   );
 }

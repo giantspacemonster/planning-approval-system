@@ -40,6 +40,9 @@ const addressForm = {
 };
 export default function AddressForm() {
   const router = useRouter();
+  const handleSubmit = (e) => {
+    router.push("/registration/accounttype");
+  };
   return (
     <div
       style={{
@@ -52,24 +55,8 @@ export default function AddressForm() {
         formHeading={addressForm.heading}
         formDescription={addressForm.description}
         inputs={addressForm.inputs}
+        handleSubmit={handleSubmit}
       />
-
-      <Button
-        variant="contained"
-        sx={{
-          width: "auto",
-          marginLeft: "38%",
-          marginRight: "42%",
-          marginBottom: "3em",
-        }}
-        onClick={(e) => {
-          const element = document.getElementById("email");
-          console.log(element);
-          router.push("/login");
-        }}
-      >
-        Submit
-      </Button>
     </div>
   );
 }
