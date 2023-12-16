@@ -55,7 +55,7 @@ export default function CardSelect({ heading, description }) {
           onClick={(e) => {
             const element = document.getElementById("email");
             console.log(element);
-            router.push("/registration/verification");
+            router.push("/login");
           }}
         >
           Select
