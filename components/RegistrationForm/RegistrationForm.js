@@ -2,8 +2,13 @@ import { Button, MenuItem, Select } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import { Inter } from "next/font/google";
 import toast from "react-hot-toast";
-import styles from "./Form.module.css";
+import styles from "./RegistrationForm.module.css";
 import TextInput from "../TextInput/TextInput";
+
+// using sanitize from DOMPurify because we use dangerouslySetInnerHTML react prop
+// which has XSS vulnerabilities if the HTML element uses event handlers
+import { sanitize } from "isomorphic-dompurify";
+
 import NumericInput from "../NumericInput/NumericInput";
 const inter = Inter({ subsets: ["latin"] });
 export default function Form({
@@ -13,33 +18,50 @@ export default function Form({
   required,
   handleSubmit,
 }) {
+  // [variable : areInputsValid] is an Object which shall have all the form input id as keys
+  // and its corresponding values are either true or false. This variable is used to check if
+  // all the inputs are valid or not in one go, since the Form Component takes in all its input
+  // fields as a prop, the validity of each field can be checked by using a switch case on the
+  // respective key on each element, but in case an input field is untouched, its validations are
+  // never triggered. This is where areInputsValid Object comes into play.
   const areInputsValid = {};
+
+  // [function : handleInputValidations] triggers when value changes in an input field(React onChange event)
   const handleInputValidation = (e) => {
     const element = e.target;
     const id = element.id;
     areInputsValid[id] = false;
 
+    // [function : styleChange)] is used to change the border-bottom color to red or green
+    // depending on the validity of the respective input.
+    function styleChange(styleType) {
+      if (styleType) {
+        element.style.borderBottom = "2px solid var(--pine-green)";
+        element.style.borderRadius = "4px";
+      } else {
+        element.style.borderBottom = "2px solid var(--fiery-rose)";
+        element.style.borderRadius = "4px";
+      }
+    }
+
     switch (id) {
       case "email":
-        // Regular expression to validate the email address
         const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
         const isValid = emailRegex.test(element.value);
         if (!isValid) {
           toast.dismiss();
-          toast.error("That does not look like a valid email address", {
+          toast.error("Invalid e-mail address", {
             id: id,
           });
           areInputsValid[id] = false;
-          element.style.borderBottom = "2px solid var(--fiery-rose)";
-          element.style.borderRadius = "4px";
+          styleChange(false);
         } else {
           toast.dismiss();
-          toast.success("That is a good looking email right there!", {
+          toast.success("Email Validated", {
             id: id,
           });
           areInputsValid[id] = true;
-          element.style.borderBottom = "2px solid var(--pine-green)";
-          element.style.borderRadius = "4px";
+          styleChange(true);
         }
         break;
       case "phone":
@@ -47,21 +69,19 @@ export default function Form({
         const isPhoneValid = phoneRegex.test(element.value);
 
         if (!isPhoneValid) {
-          element.style.borderBottom = "2px solid var(--fiery-rose)";
-          element.style.borderRadius = "4px";
           toast.dismiss();
-          toast.error("That does not look like a valid phone number", {
+          toast.error("Invalid Phone Number", {
             id: id,
           });
           areInputsValid[id] = false;
+          styleChange(false);
         } else {
           toast.dismiss();
-          toast.success("That is a good looking phone number right there!", {
+          toast.success("Phone Number Validated", {
             id: id,
           });
           areInputsValid[id] = true;
-          element.style.borderBottom = "2px solid var(--pine-green)";
-          element.style.borderRadius = "4px";
+          styleChange(true);
         }
         break;
       case "password":
@@ -83,8 +103,7 @@ export default function Form({
             id: id,
           });
           areInputsValid[id] = false;
-          element.style.borderBottom = "2px solid var(--fiery-rose)";
-          element.style.borderRadius = "4px";
+          styleChange(false);
         } else {
           // Check if the password passes 3 out of four criteria
           if (hasUpperAlphaRegex.test(password)) {
@@ -99,27 +118,22 @@ export default function Form({
           if (hasSpecialCharsRegex.test(password)) {
             hasSpecalChars = 1;
           }
-          // If flag is greater than 3, the password passes 3 out of 4 criteria
+          // If flag is greater than equal to 3, the password passes 3 out of 4 criteria
           const flag = hasLowerAlpha + hasUpperAlpha + hasNum + hasSpecalChars;
           if (flag >= 3) {
-            element.style.borderBottom = "2px solid var(--pine-green)";
-            element.style.borderRadius = "4px";
             toast.dismiss();
-            toast.success(
-              `The password is strong enough, you can move along now!`,
-              { id: id }
-            );
+            toast.success(`The password is strong enough`, { id: id });
             areInputsValid[id] = true;
+            styleChange(true);
           }
           if (flag < 3) {
-            element.style.borderBottom = "2px solid var(--fiery-rose)";
-            element.style.borderRadius = "4px";
             toast.dismiss();
             toast.error(
-              "Password should have at least one uppercase letter, one lowercase letter, and one numeric character.",
+              "Password should have at least one uppercase letter, one lowercase letter, and one numeric character or symbol.",
               { id: id }
             );
             areInputsValid[id] = false;
+            styleChange(false);
           }
         }
         break;
@@ -129,14 +143,12 @@ export default function Form({
           toast.dismiss();
           toast.success("Passwords match!");
           areInputsValid[id] = true;
-          element.style.borderBottom = "2px solid var(--pine-green)";
-          element.style.borderRadius = "4px";
+          styleChange(true);
         } else {
           toast.dismiss();
           areInputsValid[id] = false;
           toast.error("Passwords do not match!", { id: id });
-          element.style.borderBottom = "2px solid var(--fiery-rose)";
-          element.style.borderRadius = "4px";
+          styleChange(false);
         }
         break;
       case "firstname":
@@ -144,32 +156,28 @@ export default function Form({
         const nameRegex = /^[A-Za-z-' ]{2,50}$/;
         if (!nameRegex.test(element.value)) {
           toast.dismiss();
-          toast.error(`Is that really your name?`, { id: id });
+          toast.error(`Invalid Name`, { id: id });
           areInputsValid[id] = false;
-          element.style.borderBottom = "2px solid var(--fiery-rose)";
-          element.style.borderRadius = "4px";
+          styleChange(false);
         } else {
           toast.dismiss();
-          toast.success(`Username checks out`, { id: id });
+          toast.success(`Name Validated`, { id: id });
           areInputsValid[id] = true;
-          element.style.borderBottom = "2px solid var(--pine-green)";
-          element.style.borderRadius = "4px";
+          styleChange(true);
         }
         break;
       case "age":
         const ageRegex = /^[1-9][0-9]{0,2}$/;
         if (!ageRegex.test(element.value)) {
           toast.dismiss();
-          toast.error("That doesn't look like a valid age.", { id: id });
+          toast.error("Invalid Age", { id: id });
           areInputsValid[id] = false;
-          element.style.borderBottom = "2px solid var(--fiery-rose)";
-          element.style.borderRadius = "4px";
+          styleChange(false);
         } else {
           toast.dismiss();
           toast.success("Age Validated", { id: id });
           areInputsValid[id] = true;
-          element.style.borderBottom = "2px solid var(--pine-green)";
-          element.style.borderRadius = "4px";
+          styleChange(true);
         }
         break;
       case "state":
@@ -181,14 +189,12 @@ export default function Form({
           toast.dismiss();
           toast.error("Looks invalid!", { id: id });
           areInputsValid[id] = false;
-          element.style.borderBottom = "2px solid var(--fiery-rose)";
-          element.style.borderRadius = "4px";
+          styleChange(false);
         } else {
           toast.dismiss();
           toast.success("Looks valid!", { id: id });
           areInputsValid[id] = true;
-          element.style.borderBottom = "2px solid var(--pine-green)";
-          element.style.borderRadius = "4px";
+          styleChange(true);
         }
         break;
       case "postalCode":
@@ -197,14 +203,12 @@ export default function Form({
           toast.dismiss();
           toast.error("Please enter a valid postal code", { id: id });
           areInputsValid[id] = false;
-          element.style.borderBottom = "2px solid var(--fiery-rose)";
-          element.style.borderRadius = "4px";
+          styleChange(false);
         } else {
           toast.dismiss();
-          toast.success("Postal code looks good!", { id: id });
+          toast.success("Postal code Validated", { id: id });
           areInputsValid[id] = true;
-          element.style.borderBottom = "2px solid var(--pine-green)";
-          element.style.borderRadius = "4px";
+          styleChange(true);
         }
     }
   };
@@ -224,17 +228,16 @@ export default function Form({
         >
           {formHeading}
         </p>
-        <p
+        <div
           style={{
             fontSize: "1em",
             textAlign: "justify",
           }}
-        >
-          {formDescription}
-        </p>
+          dangerouslySetInnerHTML={{__html: sanitize(formDescription)}}
+        />
       </div>
       <hr />
-      <div
+      <form
         style={{
           padding: "1em",
         }}
@@ -285,6 +288,7 @@ export default function Form({
         <Button
           variant="contained"
           id="submit-button"
+          type="submit"
           sx={{
             width: "50%",
             marginTop: "3em",
@@ -297,9 +301,9 @@ export default function Form({
             let isFilled = [];
             Object.keys(inputs).map((key) => {
               const element = document.getElementById(key);
-              console.log(element.value == "");
+              // console.log(element.value == "");
               if (element.value == "") {
-                toast(`Empty value at ${key} field.`);
+                toast(`Empty value at ${key} field.`, { id: key });
                 isFilled.push(false);
               } else {
                 isFilled.push(true);
@@ -326,7 +330,7 @@ export default function Form({
         >
           Submit
         </Button>
-      </div>
+      </form>
     </div>
   );
 }

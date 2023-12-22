@@ -1,6 +1,5 @@
 "use client";
-import Form from "@/components/Form/Form";
-import Button from "@mui/material/Button";
+import RegistrationForm from "@/components/RegistrationForm/RegistrationForm";
 import { useRouter } from "next/navigation";
 const personalForm = {
     heading: "Personal Details",
@@ -46,7 +45,7 @@ export default function PersonalForm() {
         justifyContent: "center",
       }}
     >
-      <Form
+      <RegistrationForm
         formHeading={personalForm.heading}
         formDescription={personalForm.description}
         inputs={personalForm.inputs}

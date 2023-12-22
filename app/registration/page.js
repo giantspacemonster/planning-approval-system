@@ -65,21 +65,24 @@ export default function Register() {
               color: "var(--xiketic-black)",
             }}
           >
-            Welcome to Online Building and Planning Approval System
-            Registration!
+            Welcome to SecureSign
+            <br />
+            Registrations!
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            We are excited to have you join our community. The registration
-            process is quick and easy. By creating an account, you unlock access
-            to personalized features and exclusive content. Please follow these
-            steps to get started: <br />
-            - Verification: Confirm your email and phone number to secure your
-            account.
-            <br />- Personal Details: Tell us a bit about yourself. Your
-            information is kept private and helps us tailor your experience.
-            <br />- Address: Provide your address for accurate service delivery
-            and location-based features. <br />
-            Thank you for choosing us. Let us make dreams come to life!
+            Your Gateway to Seamless and Secure Digital Signatures! To embark on
+            your journey with us, please take a moment to complete the
+            registration process. Your digital security is our top priority, and
+            providing accurate information will help us tailor our services to
+            your unique needs. <br /><br/>
+            Kindly fill in the fields below with details such as your preferred
+            username, secure password, designation, department, valid email
+            address, mobile number, and official address. <br /><br/>
+            This information ensures a personalized experience and helps us
+            maintain the highest standards of identity verification. Rest
+            assured, all your data will be handled with the utmost care and in
+            compliance with stringent security measures. Thank you for choosing
+            SecureSign.io – where your digital security is our commitment.
           </Typography>
         </CardContent>
         <CardActions>

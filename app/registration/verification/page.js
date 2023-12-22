@@ -1,5 +1,5 @@
 "use client";
-import Form from "@/components/Form/Form";
+import RegistrationForm from "@/components/RegistrationForm/RegistrationForm";
 import styles from "./verification.module.css";
 import { useRouter } from "next/navigation";
 const verificationForm = {
@@ -30,7 +30,7 @@ export default function VerificationForm() {
     <div
       className={styles.verificationForm}
     >
-      <Form
+      <RegistrationForm
         formHeading={verificationForm.heading}
         formDescription={verificationForm.description}
         inputs={verificationForm.inputs}

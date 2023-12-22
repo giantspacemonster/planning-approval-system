@@ -11,16 +11,18 @@ export default function TextInput({
     <div className="container">
       <InputLabel htmlFor={`${label}-input`}>{label}</InputLabel>
       <TextField
+        autoComplete="on"
         id={id}
         label={placeholder}
         type={type}
+        name={type}
         onChange={(e, key) => {
           validation(e, key);
         }}
         variant="outlined"
         sx={{
           width: "100%",
-          borderRadius: '4px'
+          borderRadius: "4px",
         }}
         required={required}
       />

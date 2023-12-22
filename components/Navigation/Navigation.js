@@ -51,8 +51,8 @@ export default function Navigation() {
         </Link>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           {mobileScreenDetect
-            ? "OBPAS "
-            : "Online Building and Planning Approval System"}
+            ? "Secure Sign "
+            : "Secure Digital Signature Service"}
         </Typography>
         <Link
           href="login"

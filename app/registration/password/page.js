@@ -1,13 +1,26 @@
 "use client";
-import Form from "@/components/Form/Form";
-import Button from "@mui/material/Button";
+import RegistrationForm from "@/components/RegistrationForm/RegistrationForm";
 import { useRouter } from "next/navigation";
 const setPasswordForm = {
   heading: "SET PASSWORD",
-  description: `Password Requirements:- Your password must have a minimum of 8 characters 
-  containing at least 3 of the following: - Must include Lowercase characters.
-   - Must include Uppercase characters. - Must include Numbers (0-9).
-    - Must include Symbols`,
+  description: `Password Requirements:- <br/>
+  <ul>
+    <h5>Your password must have a minimum of 8 characters </h5>
+    And containing at least 3 of the following:
+    <li>
+      Must include Lowercase characters.
+    </li>
+    <li>
+      Must include Numbers (0-9).
+    </li>
+    <li>
+      Must include Symbols
+    </li>
+    <li>
+      Must include Uppercase characters.
+    </li>
+  </ul>
+`,
   inputs: {
     password: {
       name: "Password",
@@ -34,7 +47,7 @@ export default function PasswordForm() {
         justifyContent: "center",
       }}
     >
-      <Form
+      <RegistrationForm
         formHeading={setPasswordForm.heading}
         formDescription={setPasswordForm.description}
         inputs={setPasswordForm.inputs}

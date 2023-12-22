@@ -1,0 +1,18 @@
+/* iPhone Portrait */
+@media screen and (max-device-width: 480px) and (orientation:portrait) {
+    .floatingText {
+        position: relative;
+    }
+}
+
+/* iPhone Landscape */
+@media screen and (max-device-width: 480px) and (orientation:landscape) {
+}
+
+/* iPad Portrait */
+@media screen and (min-device-width: 481px) and (orientation:portrait) {
+}
+
+/* iPad Landscape */
+@media screen and (min-device-width: 481px) and (orientation:landscape) {
+}

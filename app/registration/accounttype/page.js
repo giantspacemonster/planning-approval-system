@@ -1,7 +1,5 @@
 "use client";
 import CardSelect from "@/components/CardSelect/CardSelect";
-import Form from "@/components/Form/Form";
-import Button from "@mui/material/Button";
 const cardForm = [
   {
     heading: "Citizen",

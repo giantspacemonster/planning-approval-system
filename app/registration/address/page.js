@@ -1,6 +1,5 @@
 "use client";
-import Form from "@/components/Form/Form";
-import Button from "@mui/material/Button";
+import RegistrationForm from "@/components/RegistrationForm/RegistrationForm";
 import { useRouter } from "next/navigation";
 const addressForm = {
   heading: "Address Details",
@@ -51,7 +50,7 @@ export default function AddressForm() {
         justifyContent: "center",
       }}
     >
-      <Form
+      <RegistrationForm
         formHeading={addressForm.heading}
         formDescription={addressForm.description}
         inputs={addressForm.inputs}
