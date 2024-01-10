@@ -1,6 +1,8 @@
 "use client";
 import RegistrationForm from "@/components/RegistrationForm/RegistrationForm";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useContext } from "react";
+import RegFormContext from "../RegFormContext";
 const addressForm = {
   heading: "Address Details",
   description: `Your address is essential for precise identification
@@ -38,9 +40,33 @@ const addressForm = {
   },
 };
 export default function AddressForm() {
+  const searchParams = useSearchParams();
+  const { formData, setFormData } = useContext(RegFormContext);
   const router = useRouter();
-  const handleSubmit = (e) => {
-    router.push("/registration/accounttype");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let payload = formData;
+    payload["address"] = e.currentTarget.address.value;
+    payload["city"] = e.currentTarget.city.value;
+    payload["state"] = e.currentTarget.state.value;
+    payload["postalCode"] = e.currentTarget.postalCode.value;
+    payload["country"] = e.currentTarget.country.value;
+    setFormData(payload);
+    console.log(formData)
+    // try {
+    //   const res = await fetch("/api/register/", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(payload),
+    //   });
+    //   console.log(res);
+    // } catch (e) {
+    //   console.log(e.message);
+    // }
+
+    // router.push("/registration/accounttype");
   };
   return (
     <div

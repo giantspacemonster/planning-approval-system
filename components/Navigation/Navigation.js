@@ -1,34 +1,45 @@
-'use client'
-import AppBar from "@mui/material/AppBar";
+"use client";
+import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
-import { Tooltip } from "@mui/material";
+import { Tooltip, styled } from "@mui/material";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+
+const drawerWidth = 240;
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== "open",
+})(({ theme, open }) => ({
+  zIndex: theme.zIndex.drawer + 1,
+  transition: theme.transitions.create(["width", "margin"], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    width: `calc(100%)`,
+    transition: theme.transitions.create(["width", "margin"], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
+}));
 
 export default function Navigation() {
   const [mobileScreenDetect, setMobileScreenDetect] = useState(false);
   const [tabletScreenDetect, setTabletScreenDetect] = useState(false);
   useEffect(() => {
     if (window.visualViewport.width < 587) {
-      setMobileScreenDetect(true)
+      setMobileScreenDetect(true);
     }
     if (window.visualViewport.width < 1025) {
       setTabletScreenDetect(true);
     }
   }, []);
   return (
-    <AppBar
-      position="fixed"
-      style={{
-        background: "var(--fresh-green)",
-        width: "100vw",
-        left: 0,
-      }}
-    >
+    <AppBar position="absolute" open={open}>
       <Toolbar>
         <Link
           href="/"
@@ -55,7 +66,7 @@ export default function Navigation() {
             : "Secure Digital Signature Service"}
         </Typography>
         <Link
-          href="login"
+          href="/login"
           style={{
             color: "#FFF",
           }}

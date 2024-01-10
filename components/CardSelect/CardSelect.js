@@ -9,7 +9,13 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 
-export default function CardSelect({ heading, description }) {
+export default function CardSelect({
+  heading,
+  description,
+  selection,
+  handleClick,
+  isSelected
+}) {
   const router = useRouter();
   const [mobileScreenDetect, setMobileScreenDetect] = useState(false);
   const [tabletScreenDetect, setTabletScreenDetect] = useState(false);
@@ -25,7 +31,7 @@ export default function CardSelect({ heading, description }) {
     <Card
       sx={{
         maxWidth: mobileScreenDetect ? "100%" : "50%",
-        marginLeft: mobileScreenDetect ? "4px": "25%",
+        marginLeft: mobileScreenDetect ? "4px" : "25%",
         marginRight: mobileScreenDetect ? "4px" : "25%",
         marginTop: "1em",
       }}
@@ -64,10 +70,10 @@ export default function CardSelect({ heading, description }) {
             },
           }}
           onClick={(e) => {
-            router.push("/login");
+            handleClick(e);
           }}
         >
-          Select
+          {isSelected ? 'Selected' : 'Select'}
         </Button>
         <Button variant="outlined" size="large">
           Learn More

@@ -11,7 +11,7 @@ import { sanitize } from "isomorphic-dompurify";
 
 import NumericInput from "../NumericInput/NumericInput";
 const inter = Inter({ subsets: ["latin"] });
-export default function Form({
+export default function RegistrationForm({
   formHeading,
   formDescription,
   inputs = [],
@@ -84,7 +84,7 @@ export default function Form({
           styleChange(true);
         }
         break;
-      case "password":
+      case "passwords":
         const hasUpperAlphaRegex = new RegExp(/[A-Z]/);
         const hasLowerAlphaRegex = new RegExp(/[a-z]/);
         const hasNumRegex = new RegExp(/[0-9]/);
@@ -95,9 +95,9 @@ export default function Form({
         var hasLowerAlpha = 0;
         var hasNum = 0;
         var hasSpecalChars = 0;
-        password = element.value;
+        let passwords = element.value;
         // Check if the password length is at minimum 8 characters
-        if (password.length < 8) {
+        if (passwords.length < 8) {
           toast.dismiss();
           toast.error("Password should have at least 8 characters.", {
             id: id,
@@ -106,16 +106,16 @@ export default function Form({
           styleChange(false);
         } else {
           // Check if the password passes 3 out of four criteria
-          if (hasUpperAlphaRegex.test(password)) {
+          if (hasUpperAlphaRegex.test(passwords)) {
             hasUpperAlpha = 1;
           }
-          if (hasLowerAlphaRegex.test(password)) {
+          if (hasLowerAlphaRegex.test(passwords)) {
             hasLowerAlpha = 1;
           }
-          if (hasNumRegex.test(password)) {
+          if (hasNumRegex.test(passwords)) {
             hasNum = 1;
           }
-          if (hasSpecialCharsRegex.test(password)) {
+          if (hasSpecialCharsRegex.test(passwords)) {
             hasSpecalChars = 1;
           }
           // If flag is greater than equal to 3, the password passes 3 out of 4 criteria
@@ -138,7 +138,7 @@ export default function Form({
         }
         break;
       case "confirmPassword":
-        password = document.getElementById("password");
+        let password = document.getElementById("passwords");
         if (element.value == password.value) {
           toast.dismiss();
           toast.success("Passwords match!");
@@ -153,6 +153,7 @@ export default function Form({
         break;
       case "firstname":
       case "lastname":
+      case "username":
         const nameRegex = /^[A-Za-z-' ]{2,50}$/;
         if (!nameRegex.test(element.value)) {
           toast.dismiss();
@@ -233,11 +234,12 @@ export default function Form({
             fontSize: "1em",
             textAlign: "justify",
           }}
-          dangerouslySetInnerHTML={{__html: sanitize(formDescription)}}
+          dangerouslySetInnerHTML={{ __html: sanitize(formDescription) }}
         />
       </div>
       <hr />
       <form
+        onSubmit={handleSubmit}
         style={{
           padding: "1em",
         }}
@@ -322,9 +324,9 @@ export default function Form({
                   e.preventDefault();
                 }
               });
-              if (!Object.values(areInputsValid).includes(false)) {
-                handleSubmit(e);
-              }
+              // if (!Object.values(areInputsValid).includes(false)) {
+              //   handleSubmit(e);
+              // }
             }
           }}
         >

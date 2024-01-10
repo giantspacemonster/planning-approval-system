@@ -26,7 +26,6 @@ export default function NumericInput({
         // Code to prevent user from typing anything other than a numeric value
         //   It is commented out because backspace, enter doesnot work
         onKeyDown={(e) => {
-          console.log(e.keyCode);
           // keyCode is deprecated, perhaps we can use the key attribute to achieve the same result
           if (
             !(

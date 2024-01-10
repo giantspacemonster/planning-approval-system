@@ -2,6 +2,7 @@
 import RegistrationForm from "@/components/RegistrationForm/RegistrationForm";
 import styles from "./verification.module.css";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 const verificationForm = {
   heading: "VERIFICATION",
   description: `We need to verify your email address and phone number in order to
@@ -22,14 +23,14 @@ const verificationForm = {
   },
 };
 export default function VerificationForm() {
-  const handleSubmit = (e) => {
-    router.push("/registration/password");
-  };
   const router = useRouter();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("helo");
+    // router.push("/registration/password");
+  };
   return (
-    <div
-      className={styles.verificationForm}
-    >
+    <div className={styles.verificationForm}>
       <RegistrationForm
         formHeading={verificationForm.heading}
         formDescription={verificationForm.description}

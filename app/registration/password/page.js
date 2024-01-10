@@ -1,6 +1,7 @@
 "use client";
 import RegistrationForm from "@/components/RegistrationForm/RegistrationForm";
 import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 const setPasswordForm = {
   heading: "SET PASSWORD",
   description: `Password Requirements:- <br/>
@@ -22,7 +23,7 @@ const setPasswordForm = {
   </ul>
 `,
   inputs: {
-    password: {
+    passwords: {
       name: "Password",
       placeholder: "Enter Password",
       type: "password",
@@ -36,8 +37,13 @@ const setPasswordForm = {
 };
 export default function PasswordForm() {
   const router = useRouter();
+  const searchParams = useSearchParams()
   const handleSubmit = (e) => {
-    router.push("/registration/personal");
+    e.preventDefault();
+    const search = searchParams.get('query')
+    console.log(JSON.parse(search));
+    console.log(e.currentTarget.password)
+    // router.push("/registration/personal");
   };
   return (
     <div

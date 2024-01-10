@@ -9,9 +9,12 @@ import Typography from "@mui/material/Typography";
 import styles from "./login.module.css";
 import TextInput from "@/components/TextInput/TextInput";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function Login() {
   const router = useRouter();
+  const [user, setUser] = useState(false);
+
   const [mobileScreenDetect, setMobileScreenDetect] = useState(false);
   const [tabletScreenDetect, setTabletScreenDetect] = useState(false);
   useEffect(() => {
@@ -22,11 +25,33 @@ export default function Login() {
       setTabletScreenDetect(true);
     }
   }, []);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const element = e.currentTarget;
+    const payload = {
+      userid: element.email.value,
+      password: element.password.value,
+    };
+    // console.log("PAYLOAD:", payload);
+    try {
+      const response = await axios({
+        method: "post",
+        url: "/api/auth/login",
+        data: payload,
+      });
+      console.log(response);
+      if (response.status == 200) {
+        router.push("/dashboard");
+      }
+    } catch (e) {
+      alert(e.message);
+    }
+  };
   return (
     <div className={styles.mainContainer}>
       <form
         method="POST"
-        action="/api/login"
+        onSubmit={handleSubmit}
         style={{
           width: "100%",
         }}
@@ -35,22 +60,22 @@ export default function Login() {
           sx={{
             maxWidth: tabletScreenDetect
               ? mobileScreenDetect
-                ? "94%"
+                ? "100%"
                 : "100%"
               : "100%",
             width: tabletScreenDetect
               ? mobileScreenDetect
-                ? "100%"
+                ? "94%"
                 : "75%"
               : "50%",
             marginLeft: tabletScreenDetect
               ? mobileScreenDetect
-                ? "0"
+                ? "3%"
                 : "2%"
               : "25%",
             marginRight: tabletScreenDetect
               ? mobileScreenDetect
-                ? "0"
+                ? "3%"
                 : "2%"
               : "25%",
             marginTop: mobileScreenDetect ? "0" : "1em",
@@ -85,7 +110,7 @@ export default function Login() {
               label={"Email"}
               id={"email"}
               placeholder={"Enter Your Email"}
-              type={"email"}
+              // type={"email"}
               validation={(e) => {
                 console.log("Logging In...");
               }}

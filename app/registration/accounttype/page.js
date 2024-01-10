@@ -1,44 +1,62 @@
 "use client";
 import CardSelect from "@/components/CardSelect/CardSelect";
+import RegisterLayout from "../layout";
+import { useRouter } from "next/navigation";
+import { useContext } from "react";
+import RegFormContext from "../RegFormContext";
 const cardForm = [
   {
-    heading: "Citizen",
-    description: `As a citizen registering with us, you play a pivotal role
-     in shaping our community. Your participation enables seamless communication, 
-     empowers you to access personalized services, and contributes to the collective 
-     strength of our network. By completing the registration process, you join a community 
-     committed to growth and collaboration. Thank you for being an essential part of our journey!`,
+    heading: "User/Signatory",
+    description: `As a User/Signatory, play a pivotal role in elevating the security of your digital interactions. 
+    As a primary user, you hold the key to seamlessly applying digital signatures to your documents, ensuring their 
+    authenticity and integrity. By creating an account, you gain the power to initiate signature requests, download 
+    signed files, and manage your personal information with ease. SecureSign puts you in control of your digital 
+    security journey, empowering you to safeguard your documents and transactions with confidence. `,
+    selection: "individualreg",
   },
   {
-    heading: "Architect",
-    description: `Your expertise is a valuable asset to our platform. By registering as an architect, 
-    you unlock a suite of tools tailored to streamline your work. Submit and manage building plans, 
-    collaborate with local authorities, and contribute to the development of sustainable and innovative 
-    projects. Your role is integral to our shared vision of creating spaces that inspire. 
-    Let's build together!`,
-  },
-  {
-    heading: "Local Autority",
-    description: `As a Local Authority registering with us, you are a vital part of our commitment to 
-    efficient urban development. Your role includes overseeing and approving building permits, ensuring 
-    compliance with local regulations, and contributing to the growth of our community. By joining us, 
-    you facilitate transparent communication and decision-making processes that positively impact our 
-    shared environment. Thank you for being a key partner in our journey toward responsible development.`,
+    heading: "Organization/Company",
+    description: `As an Organization/Company User, you hold a key role in streamlining and securing digital signature 
+    processes for your entire entity. SecureSign.io recognizes the unique needs of organizations and offers tailored 
+    solutions for seamless integration into your workflow. By creating an account in the role of an Organization/Company 
+    User, you gain access to a suite of features designed to enhance document security at the organizational level. 
+    Manage multiple users, oversee signature requests, and ensure a standardized and secure approach to digital 
+    signatures across your departments. SecureSign is your trusted partner in fortifying the integrity of your digital 
+    transactions.`,
+    selection: "organizationreg",
   },
 ];
 
-export default function AddressForm() {
+export default function AccountTypeForm() {
+  const router = useRouter();
+  const { setFormData } = useContext(RegFormContext);
+  const handleSubmit = (e, selection) => {
+    e.preventDefault();
+    setFormData({type: selection});
+    router.push(`/registration/${selection}`);
+  };
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-      }}
-    >
-      {cardForm.map((card, index) => (<div key={index}>
-          <CardSelect heading={card.heading} description={card.description}/>
-      </div>))}
-    </div>
+    <RegisterLayout>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
+      >
+        {cardForm.map((card, index) => (
+          <div key={index}>
+            <CardSelect
+              heading={card.heading}
+              description={card.description}
+              selection={card.selection}
+              handleClick={(e) => {
+                handleSubmit(e, card.selection);
+              }}
+            />
+          </div>
+        ))}
+      </div>
+    </RegisterLayout>
   );
 }
